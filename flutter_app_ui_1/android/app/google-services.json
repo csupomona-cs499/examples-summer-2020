@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "123940476933",
+    "firebase_url": "https://flutter-summer.firebaseio.com",
+    "project_id": "flutter-summer",
+    "storage_bucket": "flutter-summer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123940476933:android:829939e2291cc83c29a46c",
+        "android_client_info": {
+          "package_name": "edu.cpp.cs4990.flutterappui1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123940476933-0j98rvkhk2f3euu9451b8j42evte842h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0Dsg1Y1QutAdnaZnTCzv8dNuR_CuiKMA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123940476933-0j98rvkhk2f3euu9451b8j42evte842h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

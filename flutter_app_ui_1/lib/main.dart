@@ -55,8 +55,10 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
+    _counter += 5;
+
     setState(() {
-      _counter++;
+
     });
   }
 
@@ -101,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
               margin: EdgeInsets.only(bottom: 20, top: 10),
               color: Colors.blue,
               child: Text(
-                'Current Click: ${_counter * 2}',
+                'Current Click: ${_counter}',
                 style: Theme.of(context).textTheme.headline4,
               ),
             ),

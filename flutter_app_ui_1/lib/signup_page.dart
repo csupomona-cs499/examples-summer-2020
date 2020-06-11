@@ -1,17 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterappui1/list_view_demo.dart';
-import 'package:flutterappui1/signup_page.dart';
 import 'package:flutterappui1/user_profile.dart';
 
-import 'list_view_fb_demo.dart';
-
-class LoginPage extends StatefulWidget {
+class SignupPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SignupPageState createState() => _SignupPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignupPageState extends State<SignupPage> {
 
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
@@ -22,10 +19,10 @@ class _LoginPageState extends State<LoginPage> {
       body: Column(
         children: [
           Expanded(
-            flex: 40,
+            flex: 25,
             child: Image(
                 image: NetworkImage('https://helpx.adobe.com/content/dam/help/en/indesign/how-to/add-placeholder-text/jcr_content/main-pars/image_790976538/add-placeholder-text-intro_1000x560.jpg'),
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
             ),
           ),
           
@@ -36,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
                 Container(
                   margin: EdgeInsets.only(top: 20, bottom: 20),
                   child: Text(
-                      'Login',
+                      'Signup',
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold
@@ -65,44 +62,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
+
                 Container(
-                  margin: EdgeInsets.only(top: 10, bottom: 20),
-                  child: Text(
-                    'Forgot Password?',
-                    style: TextStyle(
-                      color: Colors.red
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: 5),
-                    width: 200,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(color: Colors.red)
-                      ),
-                      child: Text("Login"),
-                      onPressed: () {
-                        FirebaseAuth.instance.signInWithEmailAndPassword(
-                            email: emailController.text, password: passwordController.text)
-                        .then((value) {
-                          print("Login successfully!");
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => ListViewFirebaseDemoPage()),
-                          );
-                        }).catchError((error) {
-                          print("Failed to login!");
-                          print(error.toString());
-                        });
-                      },
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
+                    height: 65,
                     width: 200,
                     margin: EdgeInsets.only(top: 5),
                     child: RaisedButton(
@@ -112,14 +74,36 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       child: Text("Signup"),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SignupPage()),
-                        );
+                        // 1. get the email and password typed
+                        print(emailController.text);
+                        print(passwordController.text);
+                        // 2. send it to Firebase Auth
+                        FirebaseAuth.instance.createUserWithEmailAndPassword(
+                            email: emailController.text, password: passwordController.text)
+                            .then((value) {
+                              print("Successfully signed up!");
+                              Navigator.pop(context);
+                            }).catchError((error) {
+                              print("Failed to sign up!");
+                              print(error.toString());
+                            });
+
+//                        Future<AuthResult> result = FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailController.text, password: passwordController.text);
+//                        result.then((value) {
+//                          print("Successfully signed up!");
+//                        });
+//                        result.catchError((error){
+//                          print("Failed to sign up!");
+//                          print(error.toString());
+//                        });
+
+//                        Navigator.push(
+//                          context,
+//                          MaterialPageRoute(builder: (context) => ListViewDemoPage()),
+//                        );
                       },
                     ),
-                  ),
-                )
+                ),
               ],
             ),
           ),

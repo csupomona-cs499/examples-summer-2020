@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutterappui1/add_friend.dart';
 import 'package:flutterappui1/friend_contact_details.dart';
 import 'package:flutterappui1/friend_data.dart';
+import 'dart:math';
 
 class ListViewDemoPage extends StatefulWidget {
   @override
@@ -23,7 +25,7 @@ class _ListViewDemoPageState extends State<ListViewDemoPage> {
     },
     {
       'name' : 'John',
-      'phone' : '123-234-1234',
+      'phone' : '777-666-1234',
       'imageUrl' : 'https://www.clipartmax.com/png/middle/162-1623921_stewardess-510x510-user-profile-icon-png.png',
       'type' : 'WORK'
     },
@@ -92,7 +94,29 @@ class _ListViewDemoPageState extends State<ListViewDemoPage> {
                 ),
               ),
             );
-          })
+          }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddFriendPage()),
+          );
+//          var rng = Random();
+//          var friend = {
+//            'name' : entries[rng.nextInt(entries.length)],
+//            'phone' : phones[rng.nextInt(phones.length)],
+//            'imageUrl' : 'https://www.shareicon.net/data/512x512/2016/09/15/829444_man_512x512.png',
+//            'type' : 'HOME'
+//          };
+//          friendList.add(friend);
+//          print(friendList);
+//
+//          setState(() {
+//
+//          });
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
