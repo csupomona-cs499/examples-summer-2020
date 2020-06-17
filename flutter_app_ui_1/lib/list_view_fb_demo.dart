@@ -1,9 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterappui1/add_friend.dart';
+import 'package:flutterappui1/chat_page.dart';
 import 'package:flutterappui1/friend_contact_details.dart';
 import 'package:flutterappui1/friend_data.dart';
 import 'dart:math';
+
+import 'package:flutterappui1/user_profile.dart';
+import 'package:flutterappui1/user_profile_page.dart';
 
 class ListViewFirebaseDemoPage extends StatefulWidget {
   @override
@@ -43,13 +48,24 @@ class _ListViewFirebaseDemoPageState extends State<ListViewFirebaseDemoPage> {
       datasnapshot.value.forEach((k, v) {
         print(k);
         print(v);
+        v['image'] = 'https://www.clipartmax.com/png/middle/171-1717870_stockvader-predicted-cron-for-may-user-profile-icon-png.png';
         friendTmpList.add(v);
       });
       print("Final Friend List: ");
       print(friendTmpList);
       friendList = friendTmpList;
       setState(() {
-
+        FirebaseAuth.instance.currentUser().then((value) {
+          print(value);
+          var uid = value.uid;
+          print("uid: " + uid);
+          var userInfo = datasnapshot.value[uid];
+          UserProfile.currentUser = userInfo;
+          print("Current user info: " + userInfo.toString());
+        }).catchError((error) {
+          print("Failed to get the user info");
+          print(error);
+        });
       });
     }).catchError((error) {
       print("Failed to load the data!");
@@ -60,6 +76,21 @@ class _ListViewFirebaseDemoPageState extends State<ListViewFirebaseDemoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Friend List'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              print("clicked");
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => UserProfilePage()),
+              );
+            },
+          )
+        ],
+      ),
       body: ListView.builder(
           itemCount: friendList.length,
           itemBuilder: (BuildContext context, int index) {
@@ -68,7 +99,7 @@ class _ListViewFirebaseDemoPageState extends State<ListViewFirebaseDemoPage> {
                 print("The item is clicked " + index.toString());
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FriendContactDetailsPage(friendList[index])),
+                  MaterialPageRoute(builder: (context) => ChatPage(friendList[index]['uid'])),
                 );
               },
               title: Container(
@@ -106,13 +137,12 @@ class _ListViewFirebaseDemoPageState extends State<ListViewFirebaseDemoPage> {
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          refreshFriendList();
-//          Navigator.push(
-//            context,
-//            MaterialPageRoute(builder: (context) => AddFriendPage()),
-//          );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ChatPage('group')),
+          );
         },
-        child: Icon(Icons.refresh),
+        child: Icon(Icons.message),
       ),
     );
   }

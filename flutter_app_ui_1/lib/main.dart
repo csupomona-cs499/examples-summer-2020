@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutterappui1/column_demo.dart';
 import 'package:flutterappui1/login_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'list_view_fb_demo.dart';
 
 void main() {
   runApp(MyApp());
@@ -123,10 +125,23 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             FlatButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
-                );
+                // if you have login successfully, we can go to the home screen directly
+                SharedPreferences.getInstance().then((pref) {
+                  var loginStatus = pref.getBool("login");
+                  print("login status: ");
+                  print(loginStatus);
+                  if (loginStatus != null && loginStatus == true) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ListViewFirebaseDemoPage()),
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                    );
+                  }
+                });
               },
               child: Text(
                 'Confirm',
